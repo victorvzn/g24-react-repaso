@@ -32,6 +32,22 @@ const App = () => {
     setInput('')
   }
 
+  const handleCompleted = (event) => {
+    console.log('Completando tarea...')
+
+    const idSelected = event.target.dataset.id
+    const isChecked = event.target.checked
+
+    const newTodos = todos.map(todo => {
+      if (todo.id === idSelected) {
+        return { ...todo, completed: isChecked }
+      }
+      return todo
+    })
+
+    setTodos(newTodos)
+  }
+
   return (
     <main
       className="bg-yellow-100 w-full max-w-sm mx-auto mt-10 border border-yellow-600 rounded-lg shadow-lg p-4"
@@ -48,6 +64,7 @@ const App = () => {
           type="text"
           className="w-full border my-3 p-3"
           placeholder="¿Qué deseas hacer hoy?"
+          required
           onChange={handleChange}
           value={input}
         />
@@ -66,9 +83,11 @@ const App = () => {
         <ul className="flex flex-col gap-2">
           {todos.map(todo => {
             return (
-              <li className="flex gap-2">
+              <li className="flex gap-2" key={todo.id}>
                 <input
                   type="checkbox"
+                  data-id={todo.id}
+                  onChange={handleCompleted}
                 />
                 <div className="w-full flex justify-between items-center">
                   <span>{todo.title}</span>
