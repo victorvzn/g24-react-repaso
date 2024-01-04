@@ -1,26 +1,7 @@
 import { useState } from "react"
 
 const App = () => {
-  const DEFAULT_TODOS = [
-    {
-      "userId": 1,
-      "id": 1,
-      "title": "delectus aut autem",
-      "completed": false
-    },
-    {
-      "userId": 1,
-      "id": 2,
-      "title": "quis ut nam facilis et officia qui",
-      "completed": false
-    },
-    {
-      "userId": 1,
-      "id": 3,
-      "title": "fugiat veniam minus",
-      "completed": false
-    },
-  ]
+  const DEFAULT_TODOS = []
 
   const [todos, setTodos] = useState(DEFAULT_TODOS)
   const [input, setInput] = useState('')
@@ -35,6 +16,22 @@ const App = () => {
     setInput(value)
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    // console.log('Agregando nueva tarea...')
+
+    const newTodo = {
+      id: crypto.randomUUID(),
+      title: input,
+      completed: false
+    }
+
+    setTodos([...todos, newTodo])
+
+    setInput('')
+  }
+
   return (
     <main
       className="bg-yellow-100 w-full max-w-sm mx-auto mt-10 border border-yellow-600 rounded-lg shadow-lg p-4"
@@ -45,14 +42,14 @@ const App = () => {
 
       {/* {JSON.stringify(DEFAULT_TODOS)} */}
       {input}
-      {/* {JSON.stringify(todos)} */}
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           className="w-full border my-3 p-3"
           placeholder="¿Qué deseas hacer hoy?"
           onChange={handleChange}
+          value={input}
         />
       </form>
 
@@ -96,6 +93,10 @@ const App = () => {
           </li>
         </ul>
       </section>
+
+      <pre>
+        {JSON.stringify(todos, null, 2)}
+      </pre>
     </main>
   )
 }
