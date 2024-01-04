@@ -1,10 +1,26 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const App = () => {
   const DEFAULT_TODOS = []
 
   const [todos, setTodos] = useState(DEFAULT_TODOS)
   const [input, setInput] = useState('')
+
+  const fetchTodos = async () => {
+    const url = 'https://jsonplaceholder.typicode.com/todos'
+
+    const response = await fetch(url)
+
+    return response.json()
+  }
+
+  useEffect(() => {
+    console.log('me ejecuto solo la primera vez')
+
+    fetchTodos()
+      // .then(data => setTodos(data))
+      .then(setTodos)
+  }, [])
 
   const handleChange = (event) => {
     // console.log('soy el input...')
@@ -39,7 +55,7 @@ const App = () => {
     const isChecked = event.target.checked
 
     const newTodos = todos.map(todo => {
-      if (todo.id === idSelected) {
+      if (todo.id === Number(idSelected)) {
         return { ...todo, completed: isChecked }
       }
       return todo
@@ -47,6 +63,23 @@ const App = () => {
 
     setTodos(newTodos)
   }
+
+  const handleRemoveTodo = (event) => {
+    const idSelected = event.target.dataset.id
+
+    const newTodos = todos.filter(todo => todo.id !== idSelected)
+
+    setTodos(newTodos)
+  }
+
+  const handleClearTodos = (event) => {
+    const incompletedTodos = todos.filter(todo => todo.completed === false)
+
+    setTodos(incompletedTodos)
+  }
+
+  // TODO: Devolver las tareas completadas
+  const completedTodos = todos.filter(todo => todo.completed === true)
 
   return (
     <main
@@ -71,9 +104,12 @@ const App = () => {
       </form>
 
       <div className="flex justify-between items-center">
-        <span className="font-bold">2  de 3</span>
+        <span className="font-bold">
+          {completedTodos.length} de {todos.length}
+        </span>
         <button
           className="bg-blue-500 rounded-lg px-2 py-1 text-white hover:bg-blue-700 duration-300"
+          onClick={handleClearTodos}
         >
           Limpiar tareas completadas
         </button>
@@ -87,11 +123,22 @@ const App = () => {
                 <input
                   type="checkbox"
                   data-id={todo.id}
+                  checked={todo.completed}
                   onChange={handleCompleted}
                 />
                 <div className="w-full flex justify-between items-center">
-                  <span>{todo.title}</span>
-                  <button>❌</button>
+                  <span
+                    className={`${todo.completed ? 'line-through' : ''}`}
+                  >
+                    {todo.title}
+                  </span>
+                  <button
+                    className="bg-red-300 rounded-lg p-1 hover:bg-red-500 duration-300"
+                    data-id={todo.id}
+                    onClick={handleRemoveTodo}
+                  >
+                    ❌
+                  </button>
                 </div>
               </li>
             )
@@ -100,7 +147,7 @@ const App = () => {
       </section>
 
       <pre>
-        {JSON.stringify(todos, null, 2)}
+        {/* {JSON.stringify(todos, null, 2)} */}
       </pre>
     </main>
   )
