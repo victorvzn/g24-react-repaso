@@ -64,33 +64,19 @@ const App = () => {
 
       <section className="mt-4">
         <ul className="flex flex-col gap-2">
-          <li className="flex gap-2">
-            <input
-              type="checkbox"
-            />
-            <div className="w-full flex justify-between items-center">
-              <span>Todo 1</span>
-              <button>❌</button>
-            </div>
-          </li>
-          <li className="flex gap-2">
-            <input
-              type="checkbox"
-            />
-            <div className="w-full flex justify-between items-center">
-              <span>Todo 2</span>
-              <button>❌</button>
-            </div>
-          </li>
-          <li className="flex gap-2">
-            <input
-              type="checkbox"
-            />
-            <div className="w-full flex justify-between items-center">
-              <span>Todo 3</span>
-              <button>❌</button>
-            </div>
-          </li>
+          {todos.map(todo => {
+            return (
+              <li className="flex gap-2">
+                <input
+                  type="checkbox"
+                />
+                <div className="w-full flex justify-between items-center">
+                  <span>{todo.title}</span>
+                  <button>❌</button>
+                </div>
+              </li>
+            )
+          })}
         </ul>
       </section>
 
