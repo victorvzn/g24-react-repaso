@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 const App = () => {
   const DEFAULT_TODOS = [
     {
@@ -20,6 +22,19 @@ const App = () => {
     },
   ]
 
+  const [todos, setTodos] = useState(DEFAULT_TODOS)
+  const [input, setInput] = useState('')
+
+  const handleChange = (event) => {
+    // console.log('soy el input...')
+    // Estamos capturando lo que escribimos en la caja de texto
+    const value = event.target.value
+
+    // console.log(value)
+
+    setInput(value)
+  }
+
   return (
     <main
       className="bg-yellow-100 w-full max-w-sm mx-auto mt-10 border border-yellow-600 rounded-lg shadow-lg p-4"
@@ -29,12 +44,15 @@ const App = () => {
       </h1>
 
       {/* {JSON.stringify(DEFAULT_TODOS)} */}
+      {input}
+      {/* {JSON.stringify(todos)} */}
 
       <form>
         <input
           type="text"
           className="w-full border my-3 p-3"
           placeholder="¿Qué deseas hacer hoy?"
+          onChange={handleChange}
         />
       </form>
 
