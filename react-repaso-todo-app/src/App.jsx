@@ -28,7 +28,7 @@ const App = () => {
         TODO APP
       </h1>
 
-      {JSON.stringify(DEFAULT_TODOS)}
+      {/* {JSON.stringify(DEFAULT_TODOS)} */}
 
       <form>
         <input
@@ -38,11 +38,44 @@ const App = () => {
         />
       </form>
 
+      <div className="flex justify-between items-center">
+        <span className="font-bold">2  de 3</span>
+        <button
+          className="bg-blue-500 rounded-lg px-2 py-1 text-white hover:bg-blue-700 duration-300"
+        >
+          Limpiar tareas completadas
+        </button>
+      </div>
+
       <section className="mt-4">
         <ul className="flex flex-col gap-2">
-          <li>todo 1</li>
-          <li>todo 2</li>
-          <li>todo 3</li>
+          <li className="flex gap-2">
+            <input
+              type="checkbox"
+            />
+            <div className="w-full flex justify-between items-center">
+              <span>Todo 1</span>
+              <button>❌</button>
+            </div>
+          </li>
+          <li className="flex gap-2">
+            <input
+              type="checkbox"
+            />
+            <div className="w-full flex justify-between items-center">
+              <span>Todo 2</span>
+              <button>❌</button>
+            </div>
+          </li>
+          <li className="flex gap-2">
+            <input
+              type="checkbox"
+            />
+            <div className="w-full flex justify-between items-center">
+              <span>Todo 3</span>
+              <button>❌</button>
+            </div>
+          </li>
         </ul>
       </section>
     </main>
