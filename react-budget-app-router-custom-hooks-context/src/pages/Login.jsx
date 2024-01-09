@@ -14,8 +14,43 @@ const Login = () => {
     setForm({ ...form, [name]: value })
   }
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    // console.log(form)
+    const { email, password } = form
+
+    const url = `https://659c9936633f9aee7907baad.mockapi.io/api/v1/users?email=${email}&password=${password}`
+
+    const response = await fetch(url)
+
+    if(response.status === 404) {
+      console.log('CREDENCIALES INCORRECTAS')
+
+      setForm({
+        email: '',
+        password: ''
+      })
+
+      return
+    }
+
+    const data = await response.json()
+
+    console.log(data)
+
+    setForm({
+      email: '',
+      password: ''
+    })
+
+    if (data.length === 1) {
+      console.log('INGRESO CORRECTAMENTE')
+    }
+  }
+
   return (
-    <form className="w-96 mx-auto">
+    <form className="w-96 mx-auto" onSubmit={handleSubmit}>
       <h1 className="text-center text-3xl mb-8">Budget App - Login</h1>
 
       {JSON.stringify(form)}
