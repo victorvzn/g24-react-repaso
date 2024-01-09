@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
-const LayoutBase = ({ children }) => {
+const LayoutBase = () => {
   return (
     <>
       <header className='bg-amber-200 py-4 px-6'>
@@ -16,7 +16,7 @@ const LayoutBase = ({ children }) => {
 
       <main className='my-6 px-6'>
         <div className='container mx-auto'>
-          {children}
+          <Outlet />
         </div>
       </main>
     </>
